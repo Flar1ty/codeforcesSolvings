@@ -1,0 +1,36 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+
+        for (int i = 0; i < t; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            String s = stringTokenizer.nextToken();
+            int max = s.charAt(0) == '#' ? 1 : 0;
+            int count = max;
+            for (int j = 1; j < n; j++) {
+                if(s.charAt(j) == '#'){
+                    count++;
+                }
+                else {
+                    count = 0;
+                }
+                max = Math.max(max, count);
+            }
+            printWriter.println((max + 1) / 2);
+        }
+
+        printWriter.close();
+    }
+}
