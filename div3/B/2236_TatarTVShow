@@ -1,0 +1,49 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+
+        for (int i = 0; i < t; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            int k = Integer.parseInt(stringTokenizer.nextToken());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            char[] s = stringTokenizer.nextToken().toCharArray();
+            for (int j = 0; j < n - k; j++) {
+                if(s[j] == '1'){
+                    s[j] = '0';
+                    if(s[j + k] == '1'){
+                        s[j + k] = '0';
+                    }
+                    else {
+                        s[j + k] = '1';
+                    }
+                }
+            }
+            boolean flag = true;
+            for (int j = n - k; j < n; j++) {
+                if(s[j] == '1'){
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag){
+                printWriter.println("YES");
+            }
+            else {
+                printWriter.println("NO");
+            }
+        }
+
+        printWriter.close();
+    }
+}
