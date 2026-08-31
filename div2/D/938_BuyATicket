@@ -1,0 +1,73 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int n = Integer.parseInt(stringTokenizer.nextToken());
+
+        int m = Integer.parseInt(stringTokenizer.nextToken());
+
+        List<List<long[]>> graph = new ArrayList<>();
+
+        for (int i = 0; i < n + 1; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < m; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            long vi = Long.parseLong(stringTokenizer.nextToken());
+            long ui = Long.parseLong(stringTokenizer.nextToken());
+            long wi = Long.parseLong(stringTokenizer.nextToken());
+            graph.get((int) vi - 1).add(new long[]{ui - 1, wi * 2});
+            graph.get((int) ui - 1).add(new long[]{vi - 1, wi * 2});
+        }
+
+        int S = n;
+
+        stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        for (int i = 0; i < n; i++) {
+            long dist = Long.parseLong(stringTokenizer.nextToken());
+            graph.get(S).add(new long[]{i, dist});
+            graph.get(i).add(new long[]{S, dist});
+        }
+
+        long[] dist = djikstra(S, graph, n);
+
+        for (int i = 0; i < n; i++) {
+            printWriter.print(dist[i] + " ");
+        }
+
+        printWriter.close();
+    }
+    public static long[] djikstra(int start, List<List<long[]>> graph, int n){
+        long[] dist = new long[n + 1];
+        Arrays.fill(dist, Long.MAX_VALUE);
+        dist[start] = 0;
+        PriorityQueue<long[]> pq = new PriorityQueue<>(Comparator.comparingLong((a) -> a[0]));
+        pq.add(new long[]{0, (long) start});
+        while(!pq.isEmpty()){
+            long[] pair = pq.poll();
+            long currDist = pair[0];
+            long u = pair[1];
+            if(currDist > dist[(int) u]) continue;
+            for(long[] edge : graph.get((int)u)){
+                long v = edge[0];
+                long w = edge[1];
+                if(currDist + w < dist[(int)v]){
+                    dist[(int)v] = currDist + w;
+                    pq.add(new long[]{dist[(int) v], v});
+                }
+            }
+        }
+        return dist;
+    }
+
+}
