@@ -1,0 +1,41 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int n = Integer.parseInt(stringTokenizer.nextToken());
+        stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        String line = stringTokenizer.nextToken();
+        char[] s = line.toCharArray();
+        int index = -1;
+        int max = s[0];
+        int max_index = 0;
+        for (int j = 1; j < n; j++) {
+            if(index == -1){
+                if(s[j] < s[j-1]){
+                    index = j-1;
+                }
+            }
+            if(s[j] > max){
+                max = s[j];
+                max_index = j;
+            }
+        }
+        if(index != -1){
+            printWriter.println(line.substring(0, index) + line.substring(index + 1));
+        }
+        else {
+            printWriter.println(line.substring(0, max_index) + line.substring(max_index + 1));
+        }
+
+
+        printWriter.close();
+    }
+}
