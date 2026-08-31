@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+public class Solution {
+
+    public static Scanner s = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int a = s.nextInt();
+        s.nextLine();
+        for (int i = 0; i < a; i++) {
+            char[] ch = s.nextLine().toCharArray();
+            for (int j = ch.length-1; j > -1; j--) {
+                if(ch[j] == 'p'){
+                    System.out.print('q');
+                }
+                else if(ch[j] == 'q'){
+                    System.out.print('p');
+                }
+                else{
+                    System.out.print('w');
+                }
+            }
+            System.out.println();
+        }
+    }
+}
