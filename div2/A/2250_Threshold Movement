@@ -1,0 +1,64 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+
+        for (int i = 0; i < t; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int[] arr = new int[n];
+            for (int j = 0; j < n; j++) {
+                arr[j] = Integer.parseInt(stringTokenizer.nextToken());
+            }
+            if(n == 1 || n % 2 != 0){
+                printWriter.println("NO");
+                continue;
+            }
+            int max_nc = arr[0];
+            int min_nc = Integer.MAX_VALUE;
+            int max_c = arr[1];
+            int min_c = Integer.MAX_VALUE;
+            int k = 0;
+            if(max_nc - max_c > 1){
+                k = max_nc - 1;
+                for (int j = 0; j < n; j++) {
+                    if(j % 2 == 0){
+                        min_nc = Math.min(min_nc, arr[j]);
+                        max_nc = Math.max(max_nc, arr[j]);
+                        if(k >= arr[j]){
+                            k = arr[j] - 1;
+                        }
+                    }
+                    else {
+                        min_c = Math.min(min_c, arr[j]);
+                        max_c = Math.max(max_c, arr[j]);
+                        if(k <= arr[j]){
+                            k = arr[j] + 1;
+                        }
+                    }
+                }
+                if(max_nc >= min_nc && min_nc > k && k > max_c && k > min_c){
+                    printWriter.println("YES");
+                }
+                else {
+                    printWriter.println("NO");
+                }
+            }
+            else {
+                printWriter.println("NO");
+            }
+        }
+
+        printWriter.close();
+    }
+}
