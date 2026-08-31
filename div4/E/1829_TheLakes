@@ -1,0 +1,70 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+
+        for (int i = 0; i < t; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            int m = Integer.parseInt(stringTokenizer.nextToken());
+
+            int[][] arr = new int[n][m];
+
+            for (int j = 0; j < n; j++) {
+                stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+                for (int k = 0; k < m; k++) {
+                    arr[j][k] = Integer.parseInt(stringTokenizer.nextToken());
+                }
+            }
+
+            int max = 0;
+
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < m; k++) {
+                    if(arr[j][k] != 0){
+                        max = Math.max(max, BFS(arr, j, k));
+                    }
+                }
+            }
+            printWriter.println(max);
+        }
+
+        printWriter.close();
+    }
+    public static int BFS(int[][] arr, int j, int k){
+        Queue<int[]> queue = new LinkedList<>();
+        if(arr[j][k] != 0){
+            queue.add(new int[]{j, k});
+        }
+        int summ = 0;
+        while (!queue.isEmpty()){
+            int[] pair = queue.poll();
+            if(arr[pair[0]][pair[1]] != 0) {
+                summ += arr[pair[0]][pair[1]];
+                arr[pair[0]][pair[1]] = 0;
+                if (pair[0] > 0) {
+                    queue.add(new int[]{pair[0] - 1, pair[1]});
+                }
+                if (pair[0] < arr.length - 1) {
+                    queue.add(new int[]{pair[0] + 1, pair[1]});
+                }
+                if (pair[1] > 0) {
+                    queue.add(new int[]{pair[0], pair[1] - 1});
+                }
+                if (pair[1] < arr[0].length - 1) {
+                    queue.add(new int[]{pair[0], pair[1] + 1});
+                }
+            }
+        }
+        return summ;
+    }
+}
