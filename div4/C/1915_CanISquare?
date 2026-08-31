@@ -1,0 +1,41 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
+
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+        PrintWriter printWriter = new PrintWriter(System.out);
+        for (int i = 0; i < t; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            long sum = 0;
+            for (int j = 0; j < n; j++) {
+                sum += Integer.parseInt(stringTokenizer.nextToken());
+            }
+            printWriter.println(possible(sum) ? "YES" : "NO");
+            printWriter.flush();
+        }
+        printWriter.close();
+    }
+    public static boolean possible(long sum){
+        long L = 1;
+        long R = sum;
+        while (L <= R) {
+            long mid = L + (R - L) / 2;
+            if (mid > sum / mid) {
+                R = mid - 1;
+            } else if (mid < sum / mid) {
+                L = mid + 1;
+            } else {
+                return sum % mid == 0;
+            }
+        }
+        return false;
+    }
+}
