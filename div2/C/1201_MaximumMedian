@@ -1,0 +1,50 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int n = Integer.parseInt(stringTokenizer.nextToken());
+        long k = Long.parseLong(stringTokenizer.nextToken());
+
+        stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(stringTokenizer.nextToken());
+        }
+
+        Arrays.sort(arr);
+
+        long l = 0;
+        long r = Long.MAX_VALUE / 2;
+        while(l < r){
+            long mid = l + (r - l + 1) / 2;
+            if(can(arr, mid, k)){
+                l = mid;
+            }
+            else {
+                r = mid - 1;
+            }
+        }
+        printWriter.println(l);
+        printWriter.flush();
+    }
+    public static boolean can(int[] arr, long max, long k){
+        long tries = 0;
+        for (int i = arr.length / 2; i < arr.length; i++) {
+            if(arr[i] < max) {
+                tries += max - arr[i];
+                if(tries > k) return false;
+            }
+        }
+        return tries <= k;
+    }
+}
