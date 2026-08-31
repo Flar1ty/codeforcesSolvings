@@ -1,0 +1,86 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int n = Integer.parseInt(stringTokenizer.nextToken());
+        int m = Integer.parseInt(stringTokenizer.nextToken());
+        int k = Integer.parseInt(stringTokenizer.nextToken());
+
+        List<List<int[]>> graph = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < m; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int xi = Integer.parseInt(stringTokenizer.nextToken());
+            int yi = Integer.parseInt(stringTokenizer.nextToken());
+            int wi = Integer.parseInt(stringTokenizer.nextToken());
+
+            graph.get(xi - 1).add(new int[]{yi - 1, wi});
+            graph.get(yi - 1).add(new int[]{xi - 1, wi});
+        }
+
+        int[][] dist = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            dist[i] = djikstra(i, graph, n);
+        }
+
+        List<int[]> orders = new ArrayList<>();
+
+        for (int i = 0; i < k; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int ai = Integer.parseInt(stringTokenizer.nextToken()) - 1;
+            int bi = Integer.parseInt(stringTokenizer.nextToken()) - 1;
+            orders.add(new int[]{ai, bi});
+        }
+        int min_length = Integer.MAX_VALUE;
+        for (int u = 0; u < n; u++) {
+            for (int[] edge : graph.get(u)) {
+                int v = edge[0];
+                int total = 0;
+                for(int[] order : orders) {
+                    int a = order[0];
+                    int b = order[1];
+                    int cost = Math.min(dist[a][b], Math.min(dist[a][u] + dist[v][b], dist[a][v] + dist[u][b]));
+                    total += cost;
+                }
+                min_length = Math.min(min_length, total);
+            }
+        }
+        printWriter.println(min_length);
+        printWriter.close();
+    }
+    public static int[] djikstra(int start, List<List<int[]>> graph, int n){
+        int[] dist = new int[n];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[start] = 0;
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[0])); // ВЕС, ВЕРШИНА
+        pq.add(new int[]{0, start});
+        while(!pq.isEmpty()){
+            int[] pair = pq.poll();
+            int currDist = pair[0];
+            int u = pair[1];
+            if(currDist > dist[u]) continue;
+            for(int[] edge : graph.get(u)){
+                int v = edge[0];
+                int w = edge[1];
+                if(currDist + w < dist[v]){
+                    dist[v] = currDist + w;
+                    pq.add(new int[]{dist[v], v});
+                }
+            }
+        }
+        return dist;
+    }
+}
