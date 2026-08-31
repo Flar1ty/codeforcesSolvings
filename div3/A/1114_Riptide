@@ -1,0 +1,38 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+ 
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+ 
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+ 
+        for (int i = 0; i < t; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int a = Integer.parseInt(stringTokenizer.nextToken());
+            int b = Integer.parseInt(stringTokenizer.nextToken());
+            int c = Integer.parseInt(stringTokenizer.nextToken());
+            if(a != b && b != c) {
+                int[] arr = new int[]{a, b, c};
+                Arrays.sort(arr);
+                int res = arr[2] - arr[1];
+                if(res + arr[0] < arr[1]){
+                    printWriter.println(res);
+                }
+                else {
+                    printWriter.println(arr[1] - arr[0]);
+                }
+            }
+            else {
+                printWriter.println(0);
+            }
+        }
+ 
+        printWriter.close();
+    }
+}
