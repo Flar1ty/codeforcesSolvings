@@ -1,0 +1,77 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        String recipe = stringTokenizer.nextToken();
+
+        stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int nb = Integer.parseInt(stringTokenizer.nextToken());
+        int ns = Integer.parseInt(stringTokenizer.nextToken());
+        int nc = Integer.parseInt(stringTokenizer.nextToken());
+
+        stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int pb = Integer.parseInt(stringTokenizer.nextToken());
+        int ps = Integer.parseInt(stringTokenizer.nextToken());
+        int pc = Integer.parseInt(stringTokenizer.nextToken());
+
+        stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        long money = Long.parseLong(stringTokenizer.nextToken());
+
+        int b = 0;
+        int s = 0;
+        int c = 0;
+
+        for (int i = 0; i < recipe.length(); i++) {
+            switch (recipe.charAt(i)){
+                case 'B': b++; break;
+                case 'S': s++; break;
+                case 'C': c++; break;
+            }
+        }
+
+        long l = 0;
+        long r = 1000000000101L;
+        long ans = 0;
+
+        while(l <= r){
+            long mid = l + (r - l) / 2;
+            if(can(b, s, c, nb, ns, nc, pb, ps, pc, money, mid)){
+                ans = mid;
+                l = mid + 1;
+            }
+            else {
+                r = mid - 1;
+            }
+        }
+
+        printWriter.println(ans);
+        printWriter.flush();
+    }
+
+    public static boolean can(int needB, int needS, int needC, int nb, int ns, int nc, int pb, int ps, int pc, long money, long n){
+        long bread = fix(((long)needB * n) - nb);
+        long sausage = fix(((long)needS * n) - ns);
+        long cheese = fix(((long)needC * n) - nc);
+        long needed_money = (bread * pb) + (sausage * ps) + (cheese * pc);
+        return needed_money <= money;
+    }
+    public static long fix(long n){
+        if(n < 0){
+            return 0L;
+        }
+        return n;
+    }
+
+}
