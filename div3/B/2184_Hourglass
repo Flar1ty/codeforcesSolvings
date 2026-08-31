@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+        for (int i = 0; i < t; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int s = Integer.parseInt(stringTokenizer.nextToken());
+            int k = Integer.parseInt(stringTokenizer.nextToken());
+            int m = Integer.parseInt(stringTokenizer.nextToken());
+            int spins = m / k;
+            if(spins % 2 == 0){
+                int res = s - (m - (k*spins));
+                if(res > 0){
+                    printWriter.println(res);
+                }
+                else {
+                    printWriter.println(0);
+                }
+            }
+            else {
+                int res = Math.min(s, k) - (m - k*spins);
+                if(res > 0) {
+                    printWriter.println(res);
+                }
+                else {
+                    printWriter.println(0);
+                }
+            }
+        }
+        printWriter.close();
+    }
+}
