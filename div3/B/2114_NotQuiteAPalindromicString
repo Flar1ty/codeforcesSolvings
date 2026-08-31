@@ -1,0 +1,43 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+
+        for (int i = 0; i < t; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            int k = Integer.parseInt(stringTokenizer.nextToken());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            String line = stringTokenizer.nextToken();
+            int ones = 0;
+            int zeros = 0;
+            for (int j = 0; j < n; j++) {
+                switch (line.charAt(j)){
+                    case '0': {zeros++; break;}
+                    case '1': {ones++; break;}
+                }
+            }
+            int min_pairs = Math.max(ones, zeros) - n / 2;
+            int max_pairs = (ones/2) + (zeros/2);
+            if(min_pairs <= k && (k - min_pairs) % 2 == 0 && k <= max_pairs) {
+                printWriter.println("YES");
+            }
+            else {
+                printWriter.println("NO");
+            }
+        }
+
+
+
+        printWriter.close();
+    }
+}
