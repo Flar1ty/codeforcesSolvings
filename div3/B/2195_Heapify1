@@ -1,0 +1,52 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+        for (int i = 0; i < t; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int[] arr = new int[n];
+            for (int j = 0; j < n; j++) {
+                arr[j] = Integer.parseInt(stringTokenizer.nextToken());
+            }
+            boolean has_changes = true;
+            while(has_changes) {
+                has_changes = false;
+                for (int j = 0; j <= n / 2; j++) {
+                    if ((j + 1) * 2 - 1 < n) {
+                        if (arr[j] > arr[(j + 1) * 2 - 1]) {
+                            int temp = arr[(j + 1) * 2 - 1];
+                            arr[(j + 1) * 2 - 1] = arr[j];
+                            arr[j] = temp;
+                            has_changes = true;
+                        }
+                    }
+                }
+            }
+            boolean good = true;
+            for (int j = 1; j < n; j++) {
+                if(arr[j] < arr[j-1]){
+                    good = false;
+                }
+            }
+            if(good){
+                printWriter.println("YES");
+            }
+            else {
+                printWriter.println("NO");
+            }
+        }
+
+        printWriter.close();
+    }
+}
