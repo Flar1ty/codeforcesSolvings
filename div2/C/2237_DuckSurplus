@@ -1,0 +1,32 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
+
+public class CodeForces {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+        PrintWriter printWriter = new PrintWriter(System.out);
+        for (int i = 0; i < t; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            long m = 1;
+            for (int j = 0; j < n; j++) {
+                long ai = Long.parseLong(stringTokenizer.nextToken());
+                if(m > ai){
+                    m += ai;
+                }
+                else {
+                    m = ai;
+                }
+            }
+            printWriter.println(m);
+            printWriter.flush();
+        }
+        printWriter.close();
+    }
+}
