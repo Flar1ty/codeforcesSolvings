@@ -1,0 +1,53 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+        for (int u = 0; u < t; u++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            int r = Integer.parseInt(stringTokenizer.nextToken());
+            int b = Integer.parseInt(stringTokenizer.nextToken());
+
+            int max = (int) Math.ceil((float) r / (float)(b+1));
+            int repeats = r % (b+1);
+            int left = (int) Math.floor((float) r / (float)(b+1));
+            int repeat2 = (b) - repeats;
+
+            StringBuilder res = new StringBuilder();
+            /*printWriter.println(max + " " + repeats + " " + left + " " + repeat2);
+            printWriter.flush();*/
+            if(repeats != 0) {
+                for (int i = 0; i < repeats; i++) {
+                    res.append("R".repeat(max) + "B");
+                }
+                if(b - repeats > 0) {
+                    for (int i = 0; i < repeat2; i++) {
+                        res.append("R".repeat(left) + "B");
+                    }
+                    res.append("R".repeat(r - ((left * repeat2) + (max*repeats))));
+                }
+                else {
+                    res.append("R".repeat(r - max*repeats));
+                }
+            }
+            else {
+                for (int i = 0; i < b; i++) {
+                    res.append("R".repeat(max) + "B");
+                }
+                res.append("R".repeat(r - b*max));
+            }
+            printWriter.println(res);
+        }
+        printWriter.close();
+    }
+}
