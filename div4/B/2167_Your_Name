@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+        for (int u = 0; u < t; u++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            char[] l1 = stringTokenizer.nextToken().toCharArray();
+            char[] l2 = stringTokenizer.nextToken().toCharArray();
+            HashMap<Character, Integer> map1 = new HashMap<>();
+            HashMap<Character, Integer> map2 = new HashMap<>();
+            for (int i = 0; i < n; i++) {
+                map1.put(l1[i], map1.getOrDefault(l1[i], 0) + 1);
+                map2.put(l2[i], map2.getOrDefault(l2[i], 0) + 1);
+            }
+            boolean flag = true;
+            for(Map.Entry<Character, Integer> entry : map1.entrySet()){
+                if(!Objects.equals(entry.getValue(), map2.get(entry.getKey()))){
+                    flag = false;
+                }
+            }
+            if(flag){
+                printWriter.println("YES");
+            }
+            else {
+                printWriter.println("NO");
+            }
+        }
+        printWriter.close();
+    }
+}
