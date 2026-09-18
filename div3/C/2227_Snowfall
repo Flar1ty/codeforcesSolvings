@@ -1,0 +1,66 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+        for (int u = 0; u < t; u++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++) {
+                arr[i] = Integer.parseInt(stringTokenizer.nextToken());
+            }
+            int l = 0;
+            for (int i = 0; i < n; i++) {
+                if(arr[i] % 6 == 0){
+                    int temp = arr[i];
+                    arr[i] = arr[l];
+                    arr[l] = temp;
+                    l++;
+                }
+            }
+            int ind = l;
+            for (int i = l; i < n; i++) {
+                if(arr[i] % 2 == 0){
+                    int temp = arr[i];
+                    arr[i] = arr[ind];
+                    arr[ind] = temp;
+                    ind++;
+                }
+            }
+            l = ind;
+            for (int i = ind; i < n; i++) {
+                if(arr[i] % 2 != 0 && arr[i] % 3 != 0){
+                    int temp = arr[i];
+                    arr[i] = arr[l];
+                    arr[l] = temp;
+                    l++;
+                }
+            }
+            ind = l;
+            for (int i = l; i < n; i++) {
+                if(arr[i] % 3 == 0){
+                    int temp = arr[i];
+                    arr[i] = arr[ind];
+                    arr[ind] = temp;
+                    ind++;
+                }
+            }
+            for (int i = 0; i < n; i++) {
+                printWriter.print(arr[i] + " ");
+            }
+            printWriter.println();
+        }
+        printWriter.close();
+    }
+}
