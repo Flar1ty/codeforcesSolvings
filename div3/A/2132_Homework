@@ -1,0 +1,53 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+        for (int u = 0; u < t; u++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            char[] a = stringTokenizer.nextToken().toCharArray();
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int m = Integer.parseInt(stringTokenizer.nextToken());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            char[] b = stringTokenizer.nextToken().toCharArray();
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            char[] c = stringTokenizer.nextToken().toCharArray();
+
+            char[] res = new char[n + m];
+            int left = 0;
+            for (int i = m - 1; i >= 0; i--) {
+                if(c[i] == 'V'){
+                    res[left] = b[i];
+                    left++;
+                }
+            }
+            for (int i = 0; i < n; i++) {
+                res[left] = a[i];
+                left++;
+            }
+            int middle = left;
+            for (int i = 0; i < m; i++) {
+                if(c[i] == 'D'){
+                    res[middle] = b[i];
+                    middle++;
+                }
+            }
+            for (int i = 0; i < n + m; i++) {
+                printWriter.print(res[i]);
+            }
+            printWriter.println();
+        }
+        printWriter.close();
+    }
+}
