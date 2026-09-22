@@ -1,0 +1,61 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+        for (int u = 0; u < t; u++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            char[] str = stringTokenizer.nextToken().toCharArray();
+            int[] ones = new int[n];
+            int[] nulls = new int[n];
+            if(str[0] == '1'){
+                int zeros = 0;
+                for (int i = 0; i < n; i++) {
+                    if(str[i] == '0'){
+                        zeros++;
+                    }
+                }
+                printWriter.println(zeros);
+            }
+            else {
+                for (int i = 0; i < n; i++) {
+                    if (i == 0) {
+                        ones[i] = Integer.parseInt(String.valueOf(str[i]));
+                    } else {
+                        ones[i] = ones[i - 1] + Integer.parseInt(String.valueOf(str[i]));
+                    }
+                }
+                for (int i = n - 1; i >= 0; i--) {
+                    int res = str[i] == '0' ? 1 : 0;
+                    if (i == n - 1) {
+                        nulls[i] = res;
+                    } else {
+                        nulls[i] = nulls[i + 1] + res;
+                    }
+                }
+                int min = Integer.MAX_VALUE;
+                for (int i = 0; i < n; i++) {
+                    if (str[i] == '1') {
+                        min = Math.min(ones[i] - 1 + nulls[i], min);
+                    }
+                }
+                min = Math.min(ones[n - 1], Math.min(nulls[0], min));
+                printWriter.println(min);
+                /*printWriter.println("Ones: " + Arrays.toString(ones));
+                printWriter.println("Zeros: " + Arrays.toString(nulls));*/
+            }
+        }
+        printWriter.close();
+    }
+}
