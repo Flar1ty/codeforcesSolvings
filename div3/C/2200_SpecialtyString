@@ -1,0 +1,79 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.*;
+
+public class CodeForces {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        PrintWriter printWriter = new PrintWriter(System.out);
+
+        int t = Integer.parseInt(stringTokenizer.nextToken());
+        for (int u = 0; u < t; u++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            char[] line = stringTokenizer.nextToken().toCharArray();
+            if(n != 1) {
+                int index = 0;
+                boolean last = false;
+                int prev = -1;
+                int count = 0;
+                do {
+                    count = 0;
+                    for (int i = 0; i < line.length; i++) {
+                        if (i < line.length - 1) {
+                            if (line[i] != line[i + 1]) {
+                                count++;
+                            } else {
+                                i++;
+                                continue;
+                            }
+                        } else {
+                            count++;
+                        }
+                    }
+                    if (count == prev) {
+                        printWriter.println("NO");
+                        break;
+                    }
+                    if (count == 0){
+                        break;
+                    }
+                    char[] res = new char[count];
+                    for (int i = 0; i < line.length - 1; i++) {
+                        if (line[i] == line[i + 1]) {
+                            if (i == line.length - 2) {
+                                last = true;
+                            }
+                            i++;
+                            continue;
+                        } else {
+                            res[index] = line[i];
+                            index++;
+                        }
+                    }
+                    if (!last) {
+                        res[index] = line[line.length - 1];
+                    }
+                    //printWriter.println(Arrays.toString(res));
+                    line = res;
+                    prev = count;
+                    index = 0;
+                    last = false;
+                }
+                while (count != 0);
+                if(count == 0){
+                    printWriter.println("YES");
+                }
+            }
+            else {
+                printWriter.println("NO");
+            }
+        }
+        printWriter.close();
+    }
+}
